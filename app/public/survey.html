@@ -220,43 +220,98 @@
         </section>
         <br>
 
-        <!---modal-->
-        <div class="modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body text-center">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+        <!--submit button-->
+        <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">
+            <i class="fa fa-check-circle" aria-hidden="true"></i> Submit
+        </button>
+        <br />
+        <br />
+
+        <!---footer-->
+        <footer class="footer text-center">
+            <div class="container">
+                <p>
+                    <a href="#">About Korene Korologos</a> |
+                    <a href="https://github.com/korenekorologos/friendFinder">GitHub Repo</a>
+                    <br />
+                </p>
+            </div>
+        </footer>
+    </div>
+
+
+    <!----modal for the results---->
+    <div id="resultsModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h2 class="modal-title"><strong>Best Match</strong></h2>
+                </div>
+
+
+                <div class="modal-body">
+                    <h2 id="matchName"></h2>
+                    <img id="matchImg" src="https://via.placeholder.com/400x400"
+                        alt="Placeholder image in case user pic doesn't show" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
                 </div>
             </div>
         </div>
-
-        <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">Submit</button>
-        <br>
     </div>
 
-<!---js section-->
-<script type="text/javascript">
 
 
+    <!---javascript code--->
+    <script type="text/javascript">
+        $("#submit").on("click", function () {
+            function validateForm() {
+                var isValid = true;
+                $(".form-control").each(function () {
+                    if ($(this).val() === "") isValid = false;
+                });
+                $(".chosen-select").each(function () {
+                    if ($(this).val() === "") isValid = false;
+                });
+                return isValid;
+            }
+            if (validateForm() == true) {
+                var userData = {
+                    name: $("#name").val(),
+                    photo: $("#photo").val(),
+                    scores: [
+                        $("#q1").val(),
+                        $("#q2").val(),
+                        $("#q3").val(),
+                        $("#q4").val(),
+                        $("#q5").val(),
+                        $("#q6").val(),
+                        $("#q7").val(),
+                        $("#q8").val(),
+                        $("#q9").val(),
+                        $("#q10").val()
+                    ]
+                };
+                var currentURL = window.location.origin;
+                $.post(currentURL + "/api/friends", userData, function (data) {
+                    $("#matchName").text(data.name);
+                    $("#matchImg").attr("src", data.photo);
 
+                    $("#resultsModal").modal("toggle");
+                });
+            } else {
+                alert("Please fill out all fields before submitting!");
+            }
+            return false;
+        });
+    </script>
 
-
-
-
-
-
-
-
-
-
-</script>
 </body>
 
 </html>
