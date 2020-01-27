@@ -286,20 +286,20 @@
                     name: $("#name").val(),
                     photo: $("#photo").val(),
                     scores: [
-                        $("#q1").val(),
-                        $("#q2").val(),
-                        $("#q3").val(),
-                        $("#q4").val(),
-                        $("#q5").val(),
-                        $("#q6").val(),
-                        $("#q7").val(),
-                        $("#q8").val(),
-                        $("#q9").val(),
-                        $("#q10").val()
+                        $("#item1").val(),
+                        $("#item2").val(),
+                        $("#item3").val(),
+                        $("#item4").val(),
+                        $("#item5").val(),
+                        $("#item6").val(),
+                        $("#item7").val(),
+                        $("#item8").val(),
+                        $("#item9").val(),
+                        $("#item10").val()
                     ]
                 };
                 var currentURL = window.location.origin;
-                $.post(currentURL + "/api/friends", userData, function (data) {
+                $.post("/api/friends", userData, function (data) {
                     $("#matchName").text(data.name);
                     $("#matchImg").attr("src", data.photo);
 

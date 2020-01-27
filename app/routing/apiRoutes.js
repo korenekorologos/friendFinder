@@ -21,8 +21,10 @@ module.exports = function (app) {
         var userName = userData.name;
         var userScores = userData.scores;
 
+        console.log(req.body); 
+
         var b = userScores.map(function (item) {
-            return parseInt(item, 10);
+            return parseInt(item)
         });
         userData = {
             name: req.body.name,
